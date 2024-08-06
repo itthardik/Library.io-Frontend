@@ -1,9 +1,10 @@
 import NavBar from "./components/NavBar";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import ErrorPage from "./ErrorPage";
+import Home from "./pages/Home";
 
 const Layout = () => (
-	<div className="d-flex min-vh-100">
+	<div className="d-flex flex-md-row flex-column vh-100">
 		<NavBar />
 		<Outlet />
 	</div>
@@ -17,7 +18,7 @@ const router = createBrowserRouter([
 		children: [
 			{
 				path: "/",
-				element: <div>Home</div>,
+				element: <Home />,
 			},
 			{
 				path: "/books",
