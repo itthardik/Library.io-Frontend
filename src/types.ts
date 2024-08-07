@@ -21,7 +21,7 @@ export interface FormData {
 	price: number | "";
 	currentStock: number | "";
 }
-export interface UpdateButtonProps {
+export interface UpdateBookButtonProps {
 	bookData: FormData;
 	bookId: string;
 	setBook: React.Dispatch<React.SetStateAction<BookSchema | null>>;

@@ -6,7 +6,7 @@ import { BookSchema } from "../types";
 import ErrorPage from "./ErrorPage";
 import { toast } from "react-toastify";
 
-const Book = () => {
+const Member = () => {
 	const [data, setData] = useState<BookSchema[]>([]);
 	const [currPage, setCurrPage] = useState(1);
 	const [maxPages, setMaxPages] = useState(0);
@@ -85,4 +85,4 @@ const Book = () => {
 	);
 };
 
-export default Book;
+export default Member;

@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { BookSchema } from "../types";
 import { MdDelete } from "react-icons/md";
-import UpdateButton from "../components/UpdateButton";
+import UpdateBookButton from "../components/UpdateBookButton";
+import { IoArrowBackCircleSharp } from "react-icons/io5";
+import { toast } from "react-toastify";
 
 const BookById = () => {
 	const bookId = useParams().id;
@@ -26,7 +28,7 @@ const BookById = () => {
 				if (result.error && result.type === "System.Exception") {
 					setError(result.error);
 				} else if (result.error) {
-					alert(result.error);
+					toast.error(result.error);
 					return;
 				}
 				setBook(result.data);
@@ -71,20 +73,35 @@ const BookById = () => {
 			if (result.error && result.type === "System.Exception") {
 				setError(result.error);
 			} else if (result.error) {
-				alert(result.error);
+				toast.error(result.error);
 				return;
 			}
-			alert("Book Deleted Successfully");
+			toast.success("Book Deleted Successfully");
 			setBook(null);
 			navigate("/books");
 		} catch (error: any) {
-			alert(`Error: ${error.message}`);
+			toast.error(`Error: ${error.message}`);
 		}
 	};
 
 	return (
 		book && (
-			<div className=" d-flex flex-column w-100 h-100">
+			<div className="mt-5 d-flex flex-column w-100 h-100 position-relative">
+				<div
+					className="position-absolute z-3"
+					style={{
+						fontSize: "60px",
+						top: 0,
+						left: 25,
+						cursor: "pointer",
+						color: "#17206D",
+					}}
+					onClick={() => {
+						navigate("/books");
+					}}
+				>
+					<IoArrowBackCircleSharp />
+				</div>
 				<div className="d-flex justify-content-evenly align-items-center w-100 h-75">
 					<div className="book-cover w-50">
 						<div className="edition">EDITION 2024</div>
@@ -141,7 +158,7 @@ const BookById = () => {
 						<MdDelete className="fs-2" />
 						<div className="pb-1">Delete Book</div>
 					</div>
-					<UpdateButton
+					<UpdateBookButton
 						bookData={book}
 						bookId={bookId ?? ""}
 						setBook={setBook}

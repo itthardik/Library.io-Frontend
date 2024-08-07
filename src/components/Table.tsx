@@ -1,19 +1,28 @@
 import React from "react";
 import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
 import { Link } from "react-router-dom";
-import { BookSchema } from "../types";
 
 const Table = ({
 	currPage,
 	setCurrPage,
 	maxPages,
 	data,
+	tableContents,
 }: {
 	currPage: number;
 	setCurrPage: React.Dispatch<React.SetStateAction<number>>;
 	maxPages: number;
-	data: BookSchema[];
+	data: any[];
+	tableContents: string[];
 }) => {
+	function camelToPascalWithSpaces(camelCaseString: string) {
+		const pascalCaseString =
+			camelCaseString.charAt(0).toUpperCase() + camelCaseString.slice(1);
+
+		const spacedString = pascalCaseString.replace(/([A-Z])/g, " $1").trim();
+
+		return spacedString;
+	}
 	return (
 		<div className="">
 			<div className="table-responsive px-3 border">
@@ -21,19 +30,19 @@ const Table = ({
 					<thead className="thead-dark">
 						<tr>
 							<th>ID</th>
-							<th>Title</th>
-							<th>Author</th>
-							<th>Publisher</th>
+							{tableContents.map((i: any) => (
+								<th>{camelToPascalWithSpaces(i)}</th>
+							))}
 							<th>Link</th>
 						</tr>
 					</thead>
 					<tbody>
-						{data.map((d: BookSchema) => (
+						{data.map((d: any) => (
 							<tr key={d.id}>
 								<td>{d.id}</td>
-								<td>{d.title}</td>
-								<td>{d.authorName}</td>
-								<td>{d.publisherName}</td>
+								{tableContents.map((i: string) => (
+									<td>{d[i]}</td>
+								))}
 								<td>
 									<Link to={`./${d.id}`}>View</Link>
 								</td>

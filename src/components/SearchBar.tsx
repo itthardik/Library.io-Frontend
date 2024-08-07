@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { GoSearch } from "react-icons/go";
+import { FaFilter } from "react-icons/fa";
+import { RiCloseCircleFill } from "react-icons/ri";
 
 type KeyValueMap<T> = {
 	[K in keyof T]?: T[K];
@@ -27,23 +29,17 @@ const SearchBar = ({
 		PublisherName: false,
 	});
 	///Toogle params based on click inputs
-	const ParamsToggle = (paramName: string) => {
+	const ParamsToggle = (paramName: string, value: boolean) => {
 		if (paramName === "Title")
-			setSearchParams(
-				updateObject(searchParams, { Title: !searchParams.Title })
-			);
+			setSearchParams(updateObject(searchParams, { Title: value }));
 		else if (paramName === "AuthorName")
-			setSearchParams(
-				updateObject(searchParams, { AuthorName: !searchParams.AuthorName })
-			);
+			setSearchParams(updateObject(searchParams, { AuthorName: value }));
 		else if (paramName === "Genre")
-			setSearchParams(
-				updateObject(searchParams, { Genre: !searchParams.Genre })
-			);
+			setSearchParams(updateObject(searchParams, { Genre: value }));
 		else if (paramName === "PublisherName")
 			setSearchParams(
 				updateObject(searchParams, {
-					PublisherName: !searchParams.PublisherName,
+					PublisherName: value,
 				})
 			);
 	};
@@ -114,10 +110,13 @@ const SearchBar = ({
 				className="w-100 p-3 flex-wrap gap-2 justify-content-evenly align-items-center"
 				style={{ display: hideParams ? "none" : "flex" }}
 			>
+				<div className="d-flex gap-1 justify-content-center align-items-center fs-4 fw-medium">
+					<FaFilter /> Filters:
+				</div>
 				{Object.entries(searchParams).map(([key, value]) => {
 					return (
 						<div
-							className="border py-1 px-3"
+							className="border py-2 px-3 position-relative z-0"
 							key={key}
 							style={{
 								borderRadius: "8px",
@@ -125,8 +124,26 @@ const SearchBar = ({
 								backgroundColor: value ? "#17206D" : "white",
 								color: value ? "white" : "black",
 							}}
-							onClick={() => ParamsToggle(key)}
+							onClick={() => {
+								ParamsToggle(key, true);
+							}}
 						>
+							{value && (
+								<RiCloseCircleFill
+									className="position-absolute fs-4 z-1"
+									style={{
+										color: "red",
+										backgroundColor: "white",
+										borderRadius: "100%",
+										top: -5,
+										right: -5,
+									}}
+									onClick={(e) => {
+										e.stopPropagation();
+										ParamsToggle(key, false);
+									}}
+								/>
+							)}
 							{key}
 						</div>
 					);
@@ -149,6 +166,7 @@ const SearchBar = ({
 						});
 						setSearchUrl("");
 						setSearchValue("");
+						setCurrPage(1);
 					}}
 				>
 					Clear All Filters

@@ -1,8 +1,15 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { RiCloseCircleFill } from "react-icons/ri";
 import { FormData } from "../types";
+import { toast } from "react-toastify";
 
-const AddButton = () => {
+const AddBookButton = ({
+	revalidation,
+	setRevalidation,
+}: {
+	revalidation: boolean;
+	setRevalidation: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
 	const [isPopUp, setIsPopUp] = useState(false);
 	const [formData, setFormData] = useState<FormData>({
 		title: "",
@@ -45,17 +52,28 @@ const AddButton = () => {
 			});
 			if (!response.ok) {
 				throw new Error((await response.json()).title);
-			} else {
-				alert("Book Data Added Successfully");
-				setIsPopUp(false);
 			}
 
 			const result = await response.json();
 			if (result.error) {
-				alert(result.error);
+				toast.error(result.error);
+			} else {
+				toast.success("Book Data Added Successfully");
+				setIsPopUp(false);
+				setFormData({
+					title: "",
+					description: "",
+					authorName: "",
+					genre: "",
+					publisherName: "",
+					publisherDescription: "",
+					price: "",
+					currentStock: "",
+				});
+				setRevalidation(!revalidation);
 			}
-		} catch (error) {
-			alert(error);
+		} catch (error: any) {
+			toast.error(error);
 		}
 	};
 	return (
@@ -230,4 +248,4 @@ const AddButton = () => {
 	);
 };
 
-export default AddButton;
+export default AddBookButton;

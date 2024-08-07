@@ -1,9 +1,14 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { RiCloseCircleFill } from "react-icons/ri";
 import { RxUpdate } from "react-icons/rx";
-import { FormData, UpdateButtonProps } from "../types";
+import { FormData, UpdateBookButtonProps } from "../types";
+import { toast } from "react-toastify";
 
-const UpdateButton = ({ bookData, bookId, setBook }: UpdateButtonProps) => {
+const UpdateBookButton = ({
+	bookData,
+	bookId,
+	setBook,
+}: UpdateBookButtonProps) => {
 	const [isPopUp, setIsPopUp] = useState(false);
 	const [formData, setFormData] = useState<FormData>(bookData);
 
@@ -32,17 +37,17 @@ const UpdateButton = ({ bookData, bookId, setBook }: UpdateButtonProps) => {
 			if (!response.ok) {
 				throw new Error((await response.json()).title);
 			} else {
-				alert("Book Data Updated Successfully");
+				toast.success("Book Data Updated Successfully");
 				setIsPopUp(false);
 			}
 
 			const result = await response.json();
 			if (result.error) {
-				alert(result.error);
+				toast.error(result.error);
 			}
 			setBook(result);
-		} catch (error) {
-			alert(error);
+		} catch (error: any) {
+			toast.error(error);
 		}
 	};
 
@@ -220,4 +225,4 @@ const UpdateButton = ({ bookData, bookId, setBook }: UpdateButtonProps) => {
 	);
 };
 
-export default UpdateButton;
+export default UpdateBookButton;

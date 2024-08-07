@@ -12,10 +12,10 @@ const NavBar = () => {
 			{/* desktop nav */}
 			<div
 				className={
-					"z-3 d-md-block min-vh-100 col-lg-3 col-md-4 col-9 " +
+					"z-3 d-md-block col-xl-2 col-lg-3 col-md-4 col-9 " +
 					(menu ? "d-block position-absolute" : "d-none")
 				}
-				style={{ backgroundColor: "#eeeeee" }}
+				style={{ backgroundColor: "#eeeeee", minHeight: "100vh" }}
 			>
 				<div className="py-4 d-flex flex-column justify-content-center align-items-end h-100">
 					{/* LOGO */}
@@ -34,7 +34,7 @@ const NavBar = () => {
 					</Link>
 
 					{/* Nav Items */}
-					<div className="my-5 w-75 h-50">
+					<div className="my-5 w-100 h-50">
 						<NavLink
 							className={({ isActive }) =>
 								isActive ? "nav-link-active" : "nav-link"
