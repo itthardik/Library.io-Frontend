@@ -100,7 +100,6 @@ const NavBar = () => {
 					style={{ fontSize: "50px", color: "#17206d" }}
 					onClick={() => {
 						setMenu(!menu);
-						console.log("flase");
 					}}
 				/>
 				{/* LOGO */}
