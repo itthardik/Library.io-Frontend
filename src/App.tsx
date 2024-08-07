@@ -2,6 +2,8 @@ import NavBar from "./components/NavBar";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import ErrorPage from "./ErrorPage";
 import Home from "./pages/Home";
+import Book from "./pages/Book";
+import BookById from "./pages/BookById";
 
 const Layout = () => (
 	<div className="d-flex flex-md-row flex-column vh-100">
@@ -22,8 +24,14 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "/books",
-				element: <div>Books</div>,
+				element: <Book />,
 			},
+
+			{
+				path: "/books/:id",
+				element: <BookById />,
+			},
+
 			{
 				path: "/members",
 				element: <div>Members</div>,
